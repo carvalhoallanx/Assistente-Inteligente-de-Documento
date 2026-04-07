@@ -1,31 +1,49 @@
+import os
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 
-    # 1. Carregar PDF
-def create_vector_store(pdf_path='doctest/documentotest.pdf'):
-    loader = PyPDFLoader(pdf_path)
-    documents = loader.load()
-
-    # 2. Quebrar em chunks
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=50
-    )
-    docs = splitter.split_documents(documents)
-
-    # 3. Criar embeddings
+def add_documents_to_store(pdf_list):
     embeddings = HuggingFaceEmbeddings(
         model_name="all-MiniLM-L6-v2"
     )
 
-    # 4. Criar banco vetorial
-    db = FAISS.from_documents(docs, embeddings)
+    # 🔁 Verifica se já existe banco
+    if os.path.exists("vector_store"):
+        db = FAISS.load_local(
+            "vector_store",
+            embeddings,
+            allow_dangerous_deserialization=True
+        )
+    else:
+        db = None
 
-    # 5. Salvar no disco
+    all_docs = []
+
+    for pdf in pdf_list:
+        loader = PyPDFLoader(pdf)
+        docs = loader.load()
+
+        for doc in docs:
+            doc.metadata["source"] = pdf
+            doc.metadata["page"] = doc.metadata.get("page", 0)
+
+        all_docs.extend(docs)
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=500,
+        chunk_overlap=50
+    )
+
+    split_docs = splitter.split_documents(all_docs)
+
+    # 🧠 Criar ou adicionar
+    if db:
+        db.add_documents(split_docs)
+    else:
+        db = FAISS.from_documents(split_docs, embeddings)
+
     db.save_local("vector_store")
 
-    print("✅ Vector store criado!")
-    
-create_vector_store()    
+    print("✅ Documentos adicionados ao banco!")
