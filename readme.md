@@ -6,20 +6,20 @@ Um assistente inteligente que permite conversar com seus próprios arquivos usan
 
 Este projeto implementa um sistema de RAG (Retrieval-Augmented Generation) que permite:
 
-📄 Fazer upload de documentos (PDF, TXT, etc)
-❓ Fazer perguntas sobre o conteúdo
-🤖 Receber respostas baseadas nos dados enviados
+📄 Fazer upload de documentos (PDF, TXT, etc)<p>
+❓ Fazer perguntas sobre o conteúdo<p>
+🤖 Receber respostas baseadas nos dados enviados<p>
 
 👉 Basicamente: seu próprio ChatGPT com arquivos personalizados
 
-⚙️ Tecnologias utilizadas
-🐍 Python
-🔗 LangChain
-💬 Ollama
-🤖 StreamLit
-🧠 Embeddings (Sentence Transformers)
-📊 FAISS (Vector Store)
-🚀 FastAPI
+⚙️ Tecnologias utilizadas<p>
+🐍 Python<p>
+🔗 LangChain<p>
+💬 Ollama<p>
+🤖 StreamLit<p>
+🧠 Embeddings (Sentence Transformers)<p>
+📊 FAISS (Vector Store)<p>
+🚀 FastAPI<p>
 
 ## API FastAPI
 
