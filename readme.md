@@ -17,19 +17,27 @@ Este projeto implementa um sistema de RAG (Retrieval-Augmented Generation) que p
 🔗 LangChain<p>
 💬 Ollama<p>
 🤖 StreamLit<p>
-🧠 Embeddings (Sentence Transformers)<p>
+🧠 OllamaEmbeddings (Sentence Transformers)<p>
 📊 FAISS (Vector Store)<p>
 🚀 FastAPI<p>
 
-## API FastAPI
+## Como Executar
 
 Executar API:
 
-`uvicorn api.main:app --reload`
+in terminal - pip install requirements.txt or pip install 
 
-Endpoints principais:
+In powershell - irm https://ollama.com/install.ps1 | iex - install ollama
 
-- `GET /health`
-- `POST /documents/upload` (multipart/form-data com arquivos PDF)
-- `POST /materials/generate` (JSON com `request_text`, `output_type`, `k`)
-- `DELETE /database/clear?delete_docs=true`
+in cmd - ollama pull nomic-embed-text  
+ollama pull qwen2.5-coder:7b
+
+run in terminal - 
+cd ChatDOC
+uvicorn api.main:app --reload
+or
+uvicorn api.main:app --reload
+
+streamlit run ChatDOC\app.py
+or 
+streamlit run app.py
